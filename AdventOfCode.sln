@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdventOfCode2020", "AdventOfCode2020\AdventOfCode2020.csproj", "{8C6B83BC-AFF2-46C8-837D-361DCC109CDA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdventOfCode2016", "AdventOfCode2016\AdventOfCode2016.csproj", "{E630B8E9-6209-440E-AF30-9F80764E75E1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "Common\Common.csproj", "{8E4F2B7F-C7B1-4329-BC64-A246E9AE3269}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdventOfCode2021", "AdventOfCode2021\AdventOfCode2021.csproj", "{78F68D15-ADFC-431E-B9A6-F25C4DB472E7}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8C6B83BC-AFF2-46C8-837D-361DCC109CDA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8C6B83BC-AFF2-46C8-837D-361DCC109CDA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8C6B83BC-AFF2-46C8-837D-361DCC109CDA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8C6B83BC-AFF2-46C8-837D-361DCC109CDA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E630B8E9-6209-440E-AF30-9F80764E75E1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E630B8E9-6209-440E-AF30-9F80764E75E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E630B8E9-6209-440E-AF30-9F80764E75E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E630B8E9-6209-440E-AF30-9F80764E75E1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8E4F2B7F-C7B1-4329-BC64-A246E9AE3269}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8E4F2B7F-C7B1-4329-BC64-A246E9AE3269}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8E4F2B7F-C7B1-4329-BC64-A246E9AE3269}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8E4F2B7F-C7B1-4329-BC64-A246E9AE3269}.Release|Any CPU.Build.0 = Release|Any CPU
+		{78F68D15-ADFC-431E-B9A6-F25C4DB472E7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{78F68D15-ADFC-431E-B9A6-F25C4DB472E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{78F68D15-ADFC-431E-B9A6-F25C4DB472E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{78F68D15-ADFC-431E-B9A6-F25C4DB472E7}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
