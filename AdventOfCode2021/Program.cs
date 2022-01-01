@@ -6,7 +6,7 @@ namespace AdventOfCode2021
     {
         static void Main(string[] args)
         {
-            Console.WriteLine(Day6.Day6.GetResultParts());
+            Console.WriteLine(Day8.Day8.GetResultPart2());
         }
     }
 }

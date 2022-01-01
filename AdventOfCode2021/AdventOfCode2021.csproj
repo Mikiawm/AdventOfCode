@@ -10,6 +10,9 @@
     </ItemGroup>
 
     <ItemGroup>
+      <Content Include="Day8\input.txt">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
       <Content Include="Day4\input.txt">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </Content>
@@ -23,6 +26,9 @@
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </Content>
       <Content Include="Day7\input.txt">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <Content Include="Day8\test-input.txt">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </Content>
       <None Remove="Day1\input.txt" />
