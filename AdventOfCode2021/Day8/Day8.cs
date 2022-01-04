@@ -47,13 +47,13 @@ namespace AdventOfCode2021.Day8
 
     public class SevenSegmentDisplay
     {
-        public Segment TopSegment { get; set; }
-        public Segment TopLeftSegment { get; set; }
-        public Segment TopRightSegment { get; set; }
-        public Segment MidSegment { get; set; }
-        public Segment BottomLeftSegment { get; set; }
-        public Segment BottomRightSegment { get; set; }
-        public Segment BottomSegment { get; set; }
+        public Segment TopSegment { get; }
+        public Segment TopLeftSegment { get; }
+        public Segment TopRightSegment { get; }
+        public Segment MidSegment { get; }
+        public Segment BottomLeftSegment { get; }
+        public Segment BottomRightSegment { get; }
+        public Segment BottomSegment { get; }
 
         public SevenSegmentDisplay(string data)
         {

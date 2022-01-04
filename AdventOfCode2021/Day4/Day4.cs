@@ -74,7 +74,7 @@ namespace AdventOfCode2021.Day4
                     {
                         lastWiningBingoBoard = (bingoBoard, bingoNumber);
                     }
-                    
+
                     if(bingoBoards.TrueForAll(x => x.CheckSquares()))
                     {
                         return lastWiningBingoBoard.bingoNumber * lastWiningBingoBoard.bingoBoard.SumUnmarked();
@@ -111,15 +111,15 @@ namespace AdventOfCode2021.Day4
             var i = 1;
             foreach (var bingoSquare in _bingoCard)
             {
-                if (bingoSquare.isMarked)
+                if (bingoSquare.IsMarked)
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
-                    Console.Write(bingoSquare.number + " ");
+                    Console.Write(bingoSquare.Number + " ");
                     Console.ResetColor();
                 }
                 else
                 {
-                    Console.Write(bingoSquare.number + " ");
+                    Console.Write(bingoSquare.Number + " ");
                 }
 
 
@@ -136,10 +136,10 @@ namespace AdventOfCode2021.Day4
 
         public void MarkSquare(int number)
         {
-            var bingoSquare = _bingoCard.Find(x => x.number == number);
+            var bingoSquare = _bingoCard.Find(x => x.Number == number);
             if (bingoSquare != null)
             {
-                bingoSquare.isMarked = true;
+                bingoSquare.IsMarked = true;
             }
         }
 
@@ -147,8 +147,8 @@ namespace AdventOfCode2021.Day4
         {
             for (var i = 0; i < _bingoSide; i++)
             {
-                if (_bingoCard.Count(bingoSquare => bingoSquare.y == i && bingoSquare.isMarked) == _bingoSide
-                    || _bingoCard.Count(bingoSquare => bingoSquare.x == i && bingoSquare.isMarked) == _bingoSide)
+                if (_bingoCard.Count(bingoSquare => bingoSquare.Y == i && bingoSquare.IsMarked) == _bingoSide
+                    || _bingoCard.Count(bingoSquare => bingoSquare.X == i && bingoSquare.IsMarked) == _bingoSide)
                 {
                     return true;
                 }
@@ -159,23 +159,23 @@ namespace AdventOfCode2021.Day4
 
         public int SumUnmarked()
         {
-            return _bingoCard.FindAll(x => x.isMarked == false).Sum(z => z.number);
+            return _bingoCard.FindAll(x => x.IsMarked == false).Sum(z => z.Number);
         }
     }
 
     public class BingoSquare
     {
-        public int number;
-        public bool isMarked;
-        public int x;
-        public int y;
+        public readonly int Number;
+        public bool IsMarked;
+        public readonly int X;
+        public readonly int Y;
 
         public BingoSquare(int number, int x, int y, bool isMarked = false)
         {
-            this.number = number;
-            this.x = x;
-            this.y = y;
-            this.isMarked = isMarked;
+            Number = number;
+            X = x;
+            Y = y;
+            IsMarked = isMarked;
         }
     }
 }
