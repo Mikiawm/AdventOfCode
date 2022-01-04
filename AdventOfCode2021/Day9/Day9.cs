@@ -125,7 +125,7 @@ namespace AdventOfCode2021.Day9
                 {
                     basinPoint
                 };
-                var items = NewMethod(upPoint, basinPoint, downPoint, leftPoint, rightPoint).Where(x => x != null).ToList();
+                var items = GetBiggerAdjacentPoints(upPoint, basinPoint, downPoint, leftPoint, rightPoint).Where(x => x != null).ToList();
                 allItems.AddRange(items);
                 while (true)
                 {
@@ -133,7 +133,7 @@ namespace AdventOfCode2021.Day9
                     foreach (var item in items)
                     {
                         (upPoint, downPoint, leftPoint, rightPoint) = AdjacentPoints(points, item);
-                        var itemsTemp = NewMethod(upPoint, item, downPoint, leftPoint, rightPoint).Where(x => x != null).ToList();
+                        var itemsTemp = GetBiggerAdjacentPoints(upPoint, item, downPoint, leftPoint, rightPoint).ToList();
                         if (itemsTemp.Any())
                         {
                             allItems.AddRange(itemsTemp);
@@ -157,25 +157,25 @@ namespace AdventOfCode2021.Day9
             return itemsMine.Select(x => x.GroupBy(y => y).Count()).OrderByDescending(i => i).Take(3).Aggregate((a, x) => a * x);
         }
 
-        private static IEnumerable<BasinPoint> NewMethod(BasinPoint upPoint, BasinPoint basinPoint, BasinPoint downPoint, BasinPoint leftPoint, BasinPoint rightPoint)
+        private static IEnumerable<BasinPoint> GetBiggerAdjacentPoints(BasinPoint upPoint, BasinPoint basinPoint, BasinPoint downPoint, BasinPoint leftPoint, BasinPoint rightPoint)
         {
             var relatedBasinPoints = new List<BasinPoint>();
-            if (upPoint == null || upPoint.Value > basinPoint.Value && upPoint.Value != 9)
+            if (upPoint != null && upPoint.Value > basinPoint.Value && upPoint.Value != 9)
             {
                 relatedBasinPoints.Add(upPoint);
             }
 
-            if (downPoint == null || downPoint.Value > basinPoint.Value && downPoint.Value != 9)
+            if (downPoint != null && downPoint.Value > basinPoint.Value && downPoint.Value != 9)
             {
                 relatedBasinPoints.Add(downPoint);
             }
 
-            if (leftPoint == null || leftPoint.Value > basinPoint.Value && leftPoint.Value != 9)
+            if (leftPoint != null && leftPoint.Value > basinPoint.Value && leftPoint.Value != 9)
             {
                 relatedBasinPoints.Add(leftPoint);
             }
 
-            if (rightPoint == null || rightPoint.Value > basinPoint.Value && rightPoint.Value != 9)
+            if (rightPoint != null && rightPoint.Value > basinPoint.Value && rightPoint.Value != 9)
             {
                 relatedBasinPoints.Add(rightPoint);
             }
