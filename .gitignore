@@ -245,3 +245,10 @@ src\*.tss
 .sonarqube
 **/.terraform/
 **/.terraform*
+
+*.suo
+*.user
+_ReSharper.*
+bin
+obj
+packages
