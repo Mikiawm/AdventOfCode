@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Common;
@@ -87,7 +86,7 @@ namespace Common
             return paths;
         }
 
-        public List<List<string>> ReturnAllPathsSomeVerticesCanBeVisitedTwices(string start, string end, List<string> path = null)
+        public List<List<string>> ReturnAllPathsPart2(string start, string end, List<string> path = null)
         {
             path ??= new List<string>();
             path.Add(start);
@@ -110,10 +109,10 @@ namespace Common
             var currentVertices = _vertices[start];
             foreach (var vertex in currentVertices)
             {
-                if (CheckVertex(path, vertex) || !path.Contains(vertex) || vertex.ToUpper() == vertex)
+                if (!path.Contains(vertex) || vertex.ToUpper() == vertex || CheckVertex(path, vertex))
                 {
                     var pathTemp = new List<string>(path);
-                    var newPaths = ReturnAllPathsSomeVerticesCanBeVisitedTwices(vertex, end, pathTemp);
+                    var newPaths = ReturnAllPathsPart2(vertex, end, pathTemp);
                     foreach (var newPath in newPaths)
                     {
                         paths.Add(newPath);

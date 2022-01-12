@@ -41,11 +41,9 @@ namespace AdventOfCode2021.Day12
                 graph.AddEdge(src, dst);
             }
 
-            Console.WriteLine(graph.ToString());
-            var paths = graph.ReturnAllPathsSomeVerticesCanBeVisitedTwices("start", "end", new List<string>());
+            var paths = graph.ReturnAllPathsPart2("start", "end", new List<string>());
 
             return paths.Count;
         }
-
     }
 }
