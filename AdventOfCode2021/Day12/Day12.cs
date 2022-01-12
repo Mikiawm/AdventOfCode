@@ -16,21 +16,36 @@ namespace AdventOfCode2021.Day12
 
             foreach (var fileLine in fileLines)
             {
-                var src =  fileLine.Split("-").First();
-                var dst =  fileLine.Split("-").Last();
+                var src = fileLine.Split("-").First();
+                var dst = fileLine.Split("-").Last();
                 graph.AddEdge(src, dst);
-
             }
-            graph.PrintAllPaths("start", "end");
-            return 0;
+
+            Console.WriteLine(graph.ToString());
+            var paths = graph.ReturnAllPaths("start", "end");
+
+            return paths.Count;
         }
 
         public static int GetResultPart2()
         {
-            var fileReader = new FileReader("Day2/input.txt");
+            var fileReader = new FileReader("Day12/input.txt");
 
             var fileLines = fileReader.GetFileLines().ToList();
-            return 0;
+            var graph = new UndirectedGraph();
+
+            foreach (var fileLine in fileLines)
+            {
+                var src = fileLine.Split("-").First();
+                var dst = fileLine.Split("-").Last();
+                graph.AddEdge(src, dst);
+            }
+
+            Console.WriteLine(graph.ToString());
+            var paths = graph.ReturnAllPathsSomeVerticesCanBeVisitedTwices("start", "end", new List<string>());
+
+            return paths.Count;
         }
+
     }
 }

@@ -9,144 +9,149 @@ namespace Common
 {
     public class UndirectedGraph
     {
-        private readonly Dictionary<string, Vertex> _vertices;
+        private readonly Dictionary<string, List<string>> _vertices;
 
-        public UndirectedGraph(Dictionary<string, Vertex> vertices)
+        public UndirectedGraph(Dictionary<string, List<string>> vertices)
         {
             _vertices = vertices;
         }
+
         public UndirectedGraph()
         {
-            _vertices = new Dictionary<string, Vertex>();
+            _vertices = new Dictionary<string, List<string>>();
         }
 
         public void AddVertex(string vertexName)
         {
-            _vertices[vertexName] = new Vertex();
+            _vertices[vertexName] = new List<string>();
         }
 
         public void AddEdge(string src, string dest, int weight = 1)
         {
             if (!_vertices.ContainsKey(src))
             {
-                _vertices[src] = new Vertex();
+                _vertices[src] = new List<string>();
             }
 
             if (!_vertices.ContainsKey(dest))
             {
-                _vertices[dest] = new Vertex();
+                _vertices[dest] = new List<string>();
             }
 
             _vertices[src].Add(dest);
             _vertices[dest].Add(src);
         }
 
-        public KeyValuePair<string, Vertex> GetVertex(string vertexName)
+        public KeyValuePair<string, List<string>> GetVertex(string vertexName)
         {
             return _vertices.FirstOrDefault(x => x.Key == vertexName);
         }
 
         // Prints all paths from
         // 's' to 'd'
-        public void PrintAllPaths(string s, string d)
+        public List<List<string>> ReturnAllPaths(string start, string end, List<string> path = null)
         {
-            var isVisited = new Dictionary<string,bool>();
-            var pathList = new List<string>();
+            path ??= new List<string>();
+            path.Add(start);
 
-            // add source to path[]
-            pathList.Add(s);
 
-            // Call recursive utility
-            PrintAllPathsUtil(s, d, isVisited, pathList);
-        }
-
-        // A recursive function to print
-        // all paths from 'u' to 'd'.
-        // isVisited[] keeps track of
-        // vertices in current path.
-        // localPathList<> stores actual
-        // vertices in the current path
-        private void PrintAllPathsUtil(string u, string d,
-            Dictionary<string, bool> isVisited,
-            List<string> localPathList)
-        {
-
-            if (u.Equals(d)) {
-                Console.WriteLine(string.Join(" ", localPathList));
-                // if match found then no need
-                // to traverse more till depth
-                return;
+            if (start == end)
+            {
+                return new List<List<string>>
+                {
+                    path
+                };
             }
 
-            // Mark the current node
-            isVisited[u] = true;
-
-            // Recur for all the vertices
-            // adjacent to current vertex
-            foreach(var i in _vertices[u].GetConnections())
+            if (!_vertices.ContainsKey(start))
             {
-                if (!isVisited[i]) {
-                    // store current node
-                    // in path[]
-                    localPathList.Add(i);
-                    PrintAllPathsUtil(i, d, isVisited,
-                        localPathList);
+                return new List<List<string>>();
+            }
 
-                    // remove current node
-                    // in path[]
-                    localPathList.Remove(i);
+            var paths = new List<List<string>>();
+
+            var currentVertices = _vertices[start];
+            foreach (var vertex in currentVertices)
+            {
+                if (!path.Contains(vertex) || vertex.ToUpper() == vertex)
+                {
+                    var pathTemp = new List<string>(path);
+                    var newPaths = ReturnAllPaths(vertex, end, pathTemp);
+                    foreach (var newPath in newPaths)
+                    {
+                        paths.Add(newPath);
+                    }
                 }
             }
 
-            // Mark the current node
-            isVisited[u] = false;
+            return paths;
         }
 
-    }
-
-    public class Vertex
-    {
-        private readonly List<Edge> _connections;
-        private bool isVisited;
-        private int _maxVisitCount;
-
-        public Vertex(IEnumerable<string> connections, int maxVisitCount = 1)
+        public List<List<string>> ReturnAllPathsSomeVerticesCanBeVisitedTwices(string start, string end, List<string> path = null)
         {
-            _connections = connections.Select(x => new Edge(x)).ToList();
-            _maxVisitCount = maxVisitCount;
+            path ??= new List<string>();
+            path.Add(start);
+
+            if (start == end)
+            {
+                return new List<List<string>>
+                {
+                    path
+                };
+            }
+
+            if (!_vertices.ContainsKey(start))
+            {
+                return new List<List<string>>();
+            }
+
+            var paths = new List<List<string>>();
+
+            var currentVertices = _vertices[start];
+            foreach (var vertex in currentVertices)
+            {
+                if (CheckVertex(path, vertex) || !path.Contains(vertex) || vertex.ToUpper() == vertex)
+                {
+                    var pathTemp = new List<string>(path);
+                    var newPaths = ReturnAllPathsSomeVerticesCanBeVisitedTwices(vertex, end, pathTemp);
+                    foreach (var newPath in newPaths)
+                    {
+                        paths.Add(newPath);
+                    }
+                }
+            }
+
+            return paths;
         }
 
-        public Vertex()
+        public static bool CheckVertex(List<string> path, string vertex)
         {
-            _maxVisitCount = 1;
-            _connections = new List<Edge>();
+            var newPath = path.Append(vertex);
+            var groupBy = newPath
+                .Where(x => x.ToLower() == x)
+                .GroupBy(x => x)
+                .ToList();
+
+            var notTooMuch = !groupBy.Any(x => x.Count() > 2);
+            var countOptions = groupBy.Count(g => g.Count() == 2) <= 1;
+            return vertex.ToLower() != vertex || vertex != "start" && notTooMuch && countOptions;
         }
 
-        public void Add(string dest)
+        public override string ToString()
         {
-            _connections.Add(new Edge(dest));
+            var returnString = "";
+            foreach (var (key, value) in _vertices)
+            {
+                returnString += $"{key}: {string.Join(',', value)}";
+                returnString += Environment.NewLine;
+            }
+
+            return returnString;
         }
 
-        public List<string> GetConnections()
+        public IEnumerable<string> GetVerticesNames()
         {
-            return _connections.Select(x => x.GetDest()).ToList();
-        }
-    }
-
-    public class Edge
-    {
-        private readonly string _dest;
-        private readonly int _weight;
-
-        public Edge(string dest, int weight = 1)
-        {
-            _dest = dest;
-            _weight = weight;
-        }
-
-        public string GetDest()
-        {
-            return _dest;
+            return new List<string>(_vertices.Keys);
         }
     }
 }
@@ -157,7 +162,7 @@ namespace UndirectedGraphsTests
     public class UndirectedGraphTests
     {
         [TestMethod]
-        public void TestMethod1()
+        public void TestBuildGraph()
         {
             var graph = new UndirectedGraph();
             graph.AddVertex("New York");
@@ -174,18 +179,48 @@ namespace UndirectedGraphsTests
             graph.AddEdge("Atlanta", "Kyiv");
 
 
-            CollectionAssert.AreEqual(graph.GetVertex("New York").Value.GetConnections(), new List<string>
+            CollectionAssert.AreEqual(graph.GetVertex("New York").Value, new List<string>
             {
                 "Bratislava",
                 "Warsaw"
             });
 
-            CollectionAssert.AreEqual(graph.GetVertex("Warsaw").Value.GetConnections(), new List<string>
+            CollectionAssert.AreEqual(graph.GetVertex("Warsaw").Value, new List<string>
             {
                 "Bratislava",
                 "New York",
                 "Kyiv"
             });
+        }
+
+        [TestMethod]
+        public void TestMethod2()
+        {
+            Assert.AreEqual(false, UndirectedGraph.CheckVertex(new List<string> {"aa", "aa", "ab", "bb", "bc"}, "aa"));
+        }
+
+        [TestMethod]
+        public void TestMethod3()
+        {
+            Assert.AreEqual(true, UndirectedGraph.CheckVertex(new List<string> {"aa", "aa", "ab", "bb", "bc"}, "BB"));
+        }
+
+        [TestMethod]
+        public void TestMethod4()
+        {
+            Assert.AreEqual(true, UndirectedGraph.CheckVertex(new List<string> {"aa", "ab", "bb", "bc"}, "aa"));
+        }
+
+        [TestMethod]
+        public void TestMethod5()
+        {
+            Assert.AreEqual(true, UndirectedGraph.CheckVertex(new List<string> {"aa", "aa", "ab", "bb", "bc"}, "cc"));
+        }
+
+        [TestMethod]
+        public void TestMethod6()
+        {
+            Assert.AreEqual(false, UndirectedGraph.CheckVertex(new List<string> {"aa", "aa", "ab", "bb", "bc"}, "start"));
         }
     }
 }
