@@ -62,8 +62,5 @@ namespace AdventOfCode2021.Day1
             return count;
 
         }
-
-        public static IEnumerable<(T item, int index)> WithIndex<T>(this IEnumerable<T> self)
-            => self.Select((item, index) => (item, index));
     }
 }
