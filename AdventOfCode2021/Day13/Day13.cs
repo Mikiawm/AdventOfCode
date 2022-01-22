@@ -20,16 +20,26 @@ namespace AdventOfCode2021.Day13
             var coordinations = fileReader.GetFileLines().Where(x => x.Length > 0 && char.IsDigit(x[0]))
                 .Select(coordination => new PepperPoint(coordination.Split(','))).ToList();
 
+            //Part1
+            // coordinations = FoldCoordinations(folds.First(), coordinations);
+
+            //Part2
             foreach (var fold in folds)
             {
                 coordinations = FoldCoordinations(fold, coordinations);
             }
 
+            DisplayLetters(coordinations);
+            return coordinations.Count;
+        }
+
+        private static void DisplayLetters(List<PepperPoint> coordinations)
+        {
             var maxX = coordinations.Max(x => x.x);
             var maxY = coordinations.Max(x => x.y);
-            for (int y = 0; y < maxY; y++)
+            for (int y = 0; y < maxY + 1; y++)
             {
-                for (int x = 0; x < maxX ; x++)
+                for (int x = 0; x < maxX + 1; x++)
                 {
                     if (coordinations.Any(pepperPoint => pepperPoint.x == x && pepperPoint.y == y))
                     {
@@ -40,9 +50,9 @@ namespace AdventOfCode2021.Day13
                         Console.Write(" ");
                     }
                 }
+
                 Console.WriteLine();
             }
-            return coordinations.Count;
         }
 
         private static string DisplayCoordinations(List<PepperPoint> coordinations)
@@ -56,13 +66,13 @@ namespace AdventOfCode2021.Day13
             {
                 coordinations.RemoveAll(x => x.x == fold.Item2);
 
-                var biggestX = coordinations.Max(x => x.x);
+                var biggestX = fold.Item2 * 2;
 
                 for (var index = 0; index < coordinations.Count; index++)
                 {
                     if (coordinations[index].x > fold.Item2)
                     {
-                        coordinations[index] = new PepperPoint(biggestX + 1 - coordinations[index].x ,coordinations[index].y );
+                        coordinations[index] = new PepperPoint(biggestX - coordinations[index].x ,coordinations[index].y);
                     }
                 }
             }
@@ -70,13 +80,13 @@ namespace AdventOfCode2021.Day13
             {
                 coordinations.RemoveAll(x => x.y == fold.Item2);
 
-                var biggestY = coordinations.Max(x => x.y);
+                var biggestY = fold.Item2 * 2;
 
                 for (var index = 0; index < coordinations.Count; index++)
                 {
                     if (coordinations[index].y > fold.Item2)
                     {
-                        coordinations[index] = new PepperPoint(coordinations[index].x, biggestY + 1 - coordinations[index].y);
+                        coordinations[index] = new PepperPoint(coordinations[index].x, biggestY - coordinations[index].y);
                     }
                 }
             }
@@ -94,15 +104,15 @@ namespace AdventOfCode2021.Day13
             y = uint.Parse(split.Last());
         }
 
-        public PepperPoint(uint pepperPointX, uint pepperPointY)
+        public PepperPoint(long pepperPointX, long pepperPointY)
         {
             x = pepperPointX;
             y = pepperPointY;
         }
 
-        public uint y { get; set; }
+        public long y { get; set; }
 
-        public uint x { get; set; }
+        public long x { get; set; }
 
         public bool Equals(PepperPoint other)
         {
