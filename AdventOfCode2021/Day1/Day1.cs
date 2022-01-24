@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using Common;
 
@@ -24,6 +23,7 @@ namespace AdventOfCode2021.Day1
                         count++;
                     }
                 }
+
                 lastNumber = i;
             });
 
@@ -42,7 +42,7 @@ namespace AdventOfCode2021.Day1
             {
                 try
                 {
-                    if(index == 0) continue;
+                    if (index == 0) continue;
 
                     var sumOf3 = item + fileLines[index + 1] + fileLines[index + 2];
 
@@ -53,14 +53,13 @@ namespace AdventOfCode2021.Day1
 
                     lastSumOf3 = sumOf3;
                 }
-                catch (Exception e)
+                catch (Exception)
                 {
                     return count;
                 }
             }
 
             return count;
-
         }
     }
 }
